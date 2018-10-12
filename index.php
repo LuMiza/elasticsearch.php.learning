@@ -20,7 +20,7 @@ $docs[] = ['id'=>6,'title'=>'小米手环3','content'=>'秒杀限量，快来。
 $docs[] = ['id'=>7,'title'=>'iPad','content'=>'iPad，不一样的电脑。','price'=>2998];
 $docs[] = ['id'=>8,'title'=>'中华人民共和国','content'=>'中华人民共和国，伟大的国家。','price'=>19999];
 
-//dd($es->addIndex('rumble'));
+//dd($es->addIndex('rumble_01'));
 //dd($es->delIndex('lu_test'));
 
-//dd($es);
+dd($es->indexs());

@@ -22,8 +22,8 @@ class Elastic
             'index' => $name,
             'body' => [
                 'settings' => [
-                    'number_of_shards' => 2,
-                    'number_of_replicas' => 0
+                    'number_of_shards' => 2,//分片数
+                    'number_of_replicas' => 0//副本数
                 ]
             ]
         ];
@@ -48,6 +48,19 @@ class Elastic
         ];
         try{
             return $this->client->indices()->delete($params);
+        }catch (\Exception $e){
+            return  json_decode($e->getMessage(), true);
+        }
+    }
+
+    /**
+     * 获取所有索引
+     * @return array|mixed
+     */
+    public function indexs()
+    {
+        try{
+            return $this->client->indices()->getSettings();
         }catch (\Exception $e){
             return  json_decode($e->getMessage(), true);
         }
