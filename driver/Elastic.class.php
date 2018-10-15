@@ -71,6 +71,44 @@ class Elastic
     }
 
     /**
+     * 设置索引映射
+     */
+    public function setMapping($type_name, $index_name)
+    {
+        #  设置索引和类型
+        $params['index'] = $index_name;
+        $params['type']  = $type_name;
+
+        #  向现有索引添加新类型
+        $myTypeMapping = array(
+            '_source' => array(
+                'enabled' => true
+            ),
+            'properties' => array(
+                'id' => array(
+                    'type' => 'integer', // 整型
+                ),
+                'title' => array(
+                    'type' => 'string', // 字符串型
+                ),
+                'content' => array(
+                    'type' => 'string',
+                ),
+                'price' => array(
+                    'type' => 'integer'
+                )
+            )
+        );
+        $params['body'][$type_name] = $myTypeMapping;
+        #  更新索引映射
+        try {
+            return $this->client->indices()->putMapping($params);
+        } catch (\Exception $e) {
+            return json_decode($e->getMessage(), true);
+        }
+    }
+
+    /**
      * 创建文档模板
      * @param string $type_name
      * @param string $index_name
@@ -81,53 +119,7 @@ class Elastic
         if (!$type_name || !$index_name) {
             return false;
         }
-        /*
-         * {
-   "data": {
-      "mappings": {
-        "_type": {
-          "type": "string",
-          "index": "not_analyzed"
-        },
-        "name": {
-          "type": "string"
-        }
-        "address": {
-          "type": "string"
-        }
-        "timestamp": {
-          "type": "long"
-        }
-        "message": {
-          "type": "string"
-        }
-      }
-   }
-}
-         */
-        $params = [
-            'data' => [
-                'mappings' => [
-                    '_type' => [
-                        'type' => 'string',
-                        'index' => 'not_analyzed',
-                    ],
-                    'name' => [
-                        'type' => 'string'
-                    ],
-                    'address'=> [
-                        'type' => 'string'
-                    ],
-                    'timestamp' => [
-                        'type' => 'long'
-                    ],
-                    'message' => [
-                        'type' => 'string'
-                    ],
-                ]
-            ]
-        ];
-        /*
+
         $params = [
             'index' => $index_name,
             'type' => $type_name,
@@ -158,7 +150,6 @@ class Elastic
                 ]
             ]
         ];
-        */
         try {
             return  $this->client->indices()->putMapping($params);
         } catch (\Exception $e) {

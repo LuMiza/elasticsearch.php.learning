@@ -23,6 +23,11 @@ $docs[] = ['id'=>8, 'title'=>'中华人民共和国','content'=>'中华人民共
 //dd($es->addIndex('rumble_01'));
 //dd($es->delIndex('lu_test'));
 
-dd($es->indexs(), $es->createMappings('text', 'rumble'));
+foreach ($docs as $k => $v) {
+    $r = $es->addDoc($v['id'],$v,'rumble', 'articles');
+    print_r($r);
+}
 
-dd($es->createMappings('goods', 'rumble'));
+//dd($es->indexs(), $es->getMapping( 'articles','rumble'));
+
+//dd($es->createMappings('goods', 'rumble'));
