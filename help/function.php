@@ -18,3 +18,47 @@ if (! function_exists('dd')) {
         exit();
     }
 }
+
+if (! function_exists('config')) {
+    /**
+     * 获取配置信息
+     * @param null $index   获取配置信息：比如elastic.master 是获取[ elastic=> [master => ''] ]
+     *
+     * @param null $path   配置文件：  比如 remote  是config/remote.php的配置信息
+     *                                  比如 file/remote  是config/file/remote.php的配置信息
+     *                                  未设置则取默认配置文件
+     * @return bool|mixed
+     */
+    function config($index=null, $path=null)
+    {
+        $path = !$path? ROOT.'config/config.php': ROOT.'config/'.$path.'.php';
+        $config = require $path;
+        if ($index ===  null) {
+            return $config;
+        }
+        $indexs = explode('.', $index);
+        $pos = false;
+        foreach ($indexs as $key => $val) {
+            if ($pos === false) {
+                $pos = isset($config[$val])? $config[$val]: null;
+            } else {
+                $pos = isset($pos[$val])? $pos[$val]: null;
+            }
+        }
+        return $pos;
+    }
+}
+
+if (! function_exists('db')) {
+    /**
+     * 数据库助手函数
+     * @return medoo
+     * @throws Exception
+     */
+    function db(){
+        $config = config('medoo');
+        require ROOT.'driver/medoo.class.php';
+        return new  medoo($config);
+    }
+}
+

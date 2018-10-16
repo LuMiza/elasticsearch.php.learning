@@ -3,11 +3,8 @@
 require 'loading.php';
 
 
-$params = array(
-    '192.168.80.139:9200'
-);
 
-$es = new \es\Elastic($params);
+$es = new \Model\ArticlesModel();
 
 
 $docs = [];
@@ -23,11 +20,15 @@ $docs[] = ['id'=>8, 'title'=>'中华人民共和国','content'=>'中华人民共
 //dd($es->addIndex('rumble_01'));
 //dd($es->delIndex('lu_test'));
 
-foreach ($docs as $k => $v) {
+/*foreach ($docs as $k => $v) {
     $r = $es->addDoc($v['id'],$v,'rumble', 'articles');
     print_r($r);
-}
+}*/
 
-//dd($es->indexs(), $es->getMapping( 'articles','rumble'));
+$rest = db()->query('select * from cut_sku limit 10')->fetchAll(PDO::FETCH_ASSOC );
+dd($rest);
+
+//dd(config('elastic'));
+dd($es,$es->indexs(), $es->getMapping('rumble', null));
 
 //dd($es->createMappings('goods', 'rumble'));
