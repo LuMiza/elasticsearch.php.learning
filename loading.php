@@ -4,6 +4,7 @@ define('ROOT', str_replace('\\','/', __DIR__).'/');
 
 include 'vendor/autoload.php';
 require 'help/function.php';
+require 'help/Http.class.php';
 
 require 'driver/inter/ElasticsearchCurd.class.php';
 
