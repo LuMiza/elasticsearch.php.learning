@@ -27,6 +27,7 @@ class GoodsModel extends EsModel
         $indexs = $this->indexs();
         if (! in_array($this->index_name, array_keys($indexs))) {
             $result = $this->addIndex($this->index_name);
+            dd($result);
             if (isset($result['error'])) {
                 return false;
             }

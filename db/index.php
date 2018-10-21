@@ -4,7 +4,7 @@ header('Content-type:text/html;Charset=utf-8;');
 $goods = new \Model\GoodsModel();
 
 set_time_limit(0);
-//$goods->createIndex();//创建索引
+//dd($goods->createIndex());//创建索引
 //$goods->setMapping();//创建映射
 //$goods->insertAll(10);
 exit;
