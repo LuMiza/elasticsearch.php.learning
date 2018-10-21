@@ -57,7 +57,6 @@ if (! function_exists('db')) {
      */
     function db(){
         $config = config('medoo');
-        require ROOT.'driver/medoo.class.php';
         return new  medoo($config);
     }
 }

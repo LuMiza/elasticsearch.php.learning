@@ -5,7 +5,7 @@ require 'loading.php';
 
 
 $es = new \Model\ArticlesModel();
-
+exit;
 
 $docs = [];
 $docs[] = ['id'=>1, 'title'=>'苹果手机','content'=>'苹果手机，很好很强大。','price'=>1000];

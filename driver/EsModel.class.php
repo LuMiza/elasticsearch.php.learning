@@ -17,15 +17,29 @@ class EsModel  implements ElasticsearchCurd
 
     /**
      * 添加文档
-     * @param $id
+     * @param $id   主键
      * @param $doc   一位关联数组
-     * @param $index  索引
-     * @param $type   类型
+     * @param $index_name  索引
+     * @param $type_name   类型
      * @return mixed
      */
-    public function addDoc($id, $doc, $index, $type)
+    public function addDoc($id, $doc, $index_name, $type_name)
     {
         // TODO: Implement addDoc() method.
+        if (! isset($id, $doc, $index_name, $type_name)) {
+            return false;
+        }
+        $params = [
+            'index' => $index_name,
+            'type' => $type_name,
+            'id' => $id,
+            'body' => $doc
+        ];
+        try {
+            return $this->client->index($params);
+        } catch (\Exception $e) {
+            return json_decode($e->getMessage(), true);
+        }
     }
 
     /**
